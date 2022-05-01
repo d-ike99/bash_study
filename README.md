@@ -51,4 +51,7 @@ https://qiita.com/SoarTec-lab/items/4475ba6de612fba3f163
 ## separated by specify word(like comma)
 https://genzouw.com/entry/2019/12/17/120057/1831/
 
+## arithmetic
+https://qiita.com/akinomyoga/items/9761031c551d43307374
+
 #

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# read csvfile
-func_read_csv () {
-    # Read csvfile And Read line by 'one line'
+# read env file
+func_read_env () {
+    # Read csvfile And Read line by 'one line' like "sample1,1,2"
     while read one_line; do
         echo "one_line: "$one_line
 
@@ -12,9 +12,15 @@ func_read_csv () {
         # get file name
         echo ${split_one_line[0]}
 
-        # check csv
+        # create csv
 
+        # compress csv file(to zip)
+        
 
+        # read csv
+        ## in: csvfilename, out: mojiretsu
+        echo `./read_csv.sh ${split_one_line[*]}`
+        echo ""
         # call python
 
         # zip
@@ -33,7 +39,7 @@ echo "file :"$file
 if [ -e $file ]; then
     echo "file exist!"
 
-    func_read_csv $file
+    func_read_env $file
 fi
 
 # end logs
