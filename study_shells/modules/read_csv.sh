@@ -2,10 +2,11 @@
 
 # in: csv file name, row info
 
-# check file path
-# func_check_filepath () {
-
-# }
+# define log
+disp_log () {
+    log_args=("$@")
+    echo `date '+%Y/%m/%d %H:%M:%S'`" read_csv.sh line:${BASH_LINENO[0]} "${log_args[*]}
+}
 
 # メモ：一行ずつしかレコードを読み込めないため、readcsvの関数の中で文字列作成処理を行う
 # read csvfile
@@ -20,15 +21,12 @@ func_read_csv () {
     # echo "read_csv argn: "$argn
     # echo "read_csv argn[]: "${args[*]}
 
-    # get file name
-    file="../files/csv/"$1".csv"
-
     # create arg
     query="("
     for i in $(seq $((argn-1)))
     do
         # 1列目はファイル名のためスルーする
-        if [ $i = 0 ]; then
+        if [ $i = 0 ] || [ $i = 1 ]; then
             continue
         fi
 
@@ -52,7 +50,7 @@ func_read_csv () {
         for i in $(seq $((argn-1)))
         do
             # 1列目はファイル名のためスルーする
-            if [ $i = 0 ]; then
+            if [ $i = 0 ] || [ $i = 1 ]; then
                 continue
             fi
             query=$query${split_one_line[${args[$i]}-1]}", "
@@ -63,21 +61,25 @@ func_read_csv () {
 
     query=${query%??}")"
 
-    echo "query: "$query
+    disp_log "query: "$query
 }
+
+# start log
+disp_log 'start'
 
 # get arg info
 args=("$@")
 argn=$#
 
 # check arg file
-file="../files/csv/"$1".csv"
-echo "file :"$file
+file="../../outputs/date/$1/"$2".csv"
+disp_log "file :"$file
 if [ -e $file ]; then
-    echo "file exist!"
+    disp_log "file exist!"
     # echo ${args[*]}
     # call func_read_csv
     func_read_csv ${args[*]}
 fi
 
-
+# end
+disp_log 'end'
