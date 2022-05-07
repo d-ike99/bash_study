@@ -1,30 +1,35 @@
-# bash_study
 # 初めに
-本リポジトリには、bashスクリプトのいくつかの動作をまとめています。
+本リポジトリには、bashスクリプトのいくつかの動作をまとめています。<br>
+
 
 # ディレクトリ構造
 ~~~
 bash_study
-    ├── README.md
-    ├── files
-    │   ├── csv
-    │   │   └── sample.csv
-    │   └── env
-    │       ├── sample.env
-    │       └── set_env.env
-    └── study_shells
-        ├── access_aws.sh
-        ├── call_python.sh
-        └── read_file.sh
+├── README.md
+├── files
+│   ├── csv
+│   │   ├── sample1.csv
+│   │   └── sample2.csv
+│   └── env
+│       ├── sample.env
+│       └── set_env.env
+└── study_shells
+    ├── modules
+    │   ├── compress_tozip.sh
+    │   ├── create_csv.sh
+    │   ├── decompress_tocsv.sh
+    │   └── read_csv.sh
+    └── read_env.sh
 ~~~
 
 # 機能一覧
 | ファイル名 | 機能概要 | IN | OUT |
 | ---- | ---- | ---- | ---- |
-| read_csv.sh | 引数のenvファイルを読み込み、中身を一行ずつ表示する  | envファイル名 | - |
-| set_env.sh | 環境変数を読み込む | - | - |
-| call_python.sh | pythonファイルを呼び出す | - | - |
-| access_aws.sh | AWSにアクセスする | - | - |
+| ./read_csv.sh | 引数のenvファイルを読み込み、中身を一行ずつ表示する  | envファイル名 | - |
+| ./modules/create_csv.sh |  |  |  |
+| ./modules/compress_tozip.sh |  |  |  |
+| ./modules/decompress_tocsv.sh |  |  |  |
+| ./modules/read_csv.sh |  |  |  |
 
 
 # 開発環境（筆者）
