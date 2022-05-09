@@ -51,7 +51,8 @@ bash_study
 git clone 
 cd bash_study/study_shells
 chmod 755 *.sh
-./read_file.sh
+./read_env01.sh 01.env
+./read_env02.sh 01.env "date"
 ```
 
 
