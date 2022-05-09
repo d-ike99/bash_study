@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # in: csv file name, row info
 
 # define log
@@ -61,7 +60,7 @@ func_read_csv () {
 
     query=${query%??}")"
 
-    disp_log "query: "$query
+    #disp_log "query: "$query
 }
 
 # start log
@@ -70,16 +69,35 @@ disp_log 'start'
 # get arg info
 args=("$@")
 argn=$#
+query=""
+
+# disp arg
+disp_log "args: "${args[*]}
 
 # check arg file
-file="../../outputs/date/$1/"$2".csv"
+file="../files/outputs/date/$1/"$2".csv"
 disp_log "file :"$file
-if [ -e $file ]; then
-    disp_log "file exist!"
-    # echo ${args[*]}
-    # call func_read_csv
-    func_read_csv ${args[*]}
+if [ ! -e $file ]; then
+    disp_log "ERROR this file not exist... -> "$file
+    exit 1
 fi
+disp_log "file exist!"
+
+
+
+# call func_read_csv
+if [ $argn -gt 2 ]; then
+    disp_log "call func_read_csv. because argn == 2 --> "$argn
+    func_read_csv ${args[*]}
+
+    # memo in: $file
+    disp_log "name: "${args[1]}
+    disp_log "query: "$query
+fi
+
+
+# memo in: $file
+disp_log "name: "${args[1]}
 
 # end
 disp_log 'end'

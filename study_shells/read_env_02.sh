@@ -1,4 +1,5 @@
 #!/bin/bash
+# in: env_file_name, date_folder_path
 
 disp_log () {
     args=("$@")
@@ -7,10 +8,6 @@ disp_log () {
 
 # start log
 disp_log 'start'
-
-# get now date
-l_date=`date '+%Y%m%d%H%M%S'`
-
 
 # read env file
 func_read_env () {
@@ -25,21 +22,13 @@ func_read_env () {
         filename=${split_one_line[0]}
         disp_log $filename
 
-        # create csv　失敗時、ログ出力してcontinue
-        ./modules/create_csv.sh $filename $l_date
-
-        # compress csv file(to zip)
-        ./modules/compress_tozip.sh $filename $l_date
-
         # decompress zip file(to csv)
-        ./modules/decompress_tocsv.sh $filename $l_date
+        ./modules/decompress_tocsv.sh $filename $2
 
         # read csv
         ## in: csvfilename, out: mojiretsu
-        ./modules/read_csv.sh $l_date ${split_one_line[*]}
+        ./modules/read_csv.sh $2 ${split_one_line[*]}
         echo ""
-
-
 
     done < $1
 
@@ -47,16 +36,34 @@ func_read_env () {
 
 # start logs
 
-# check arg file
-file="../files/env/"$1
-disp_log "file :"$file
-if [ -e $file ]; then
-    disp_log "file exist!"
+# define val
+env_file="../files/env/"$1
+date_folder="../files/outputs/date/"$2
+args=("$@")
+argn=$#
 
-    func_read_env $file
-else
-    disp_log "this file not exist..."
+# check arg file
+if [ $argn -ne 2 ]; then
+    disp_log "ERROR args most be 2.. your args -> "$argn
+    exit 1
 fi
+
+if [ ! -e $env_file ]; then
+    disp_log "ERROR this file not exist... -> "$env_file
+    exit 1
+fi
+disp_log "env file exist! -> "$env_file
+
+if [ ! -d $date_folder ]; then
+    disp_log "ERROR this folder not exist... -> "$date_folder
+    exit 1
+fi
+disp_log "folder exist! -> "$date_folder
+
+
+# call func
+func_read_env $env_file $2
+
 
 # end logs
 disp_log 'end'

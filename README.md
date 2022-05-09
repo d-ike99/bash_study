@@ -1,26 +1,34 @@
 # 初めに
 本リポジトリには、bashスクリプトのいくつかの動作をまとめています。<br>
 
-
 # ディレクトリ構造
 ~~~
 bash_study
 ├── README.md
 ├── files
-│   ├── csv
-│   │   ├── sample1.csv
-│   │   └── sample2.csv
-│   └── env
-│       ├── sample.env
-│       └── set_env.env
+│   ├── env
+│   │   ├── 01.env
+│   │   └── 02.env
 └── study_shells
     ├── modules
     │   ├── compress_tozip.sh
     │   ├── create_csv.sh
     │   ├── decompress_tocsv.sh
     │   └── read_csv.sh
-    └── read_env.sh
+    ├── read_env_01.sh
+    └── read_env_02.sh
 ~~~
+
+# 機能概要
+## envファイル読み込み
+### ファイル名
+    ./read_env.sh
+
+### 説明
+    引数で指定した"envファイル"を読み込みます。
+    envファイルは1行ずつ読み込み、読み込んだ内容を引数としてmodules配下のシェルを呼び出します。
+
+
 
 # 機能一覧
 | ファイル名 | 機能概要 | IN | OUT |
@@ -34,7 +42,8 @@ bash_study
 
 # 開発環境（筆者）
 - visual studio code
-- （拡張機能）
+- （拡張機能）Bash IDE
+- （拡張機能）ShellCheck
 
 
 # 動作方法

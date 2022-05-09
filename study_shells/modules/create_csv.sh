@@ -15,7 +15,7 @@ args=("$@")
 disp_log "args: " ${args[*]}
 
 # define val
-create_path="../../outputs/date/"$2
+create_path="../files/outputs/date/"$2
 file_name=$1".csv"
 
 # ディレクトリ
