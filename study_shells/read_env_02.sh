@@ -38,9 +38,10 @@ disp_log 'start'
 
 # define val
 env_file_name=$1
+env_file_name=${env_file_name:0:-4}
 env_file_path="../files/env/"$1
 date_folder_name=$2
-date_folder="../files/outputs/"$1"/"$2
+date_folder="../files/outputs/"$env_file_name"/"$2
 args=("$@")
 argn=$#
 
