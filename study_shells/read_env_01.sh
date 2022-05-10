@@ -15,6 +15,9 @@ l_date=`date '+%Y%m%d%H%M%S'`
 
 # read env file
 func_read_env () {
+    # define val
+    env_name=$2
+
     # Read csvfile And Read line by 'one line' like "sample1,1,2"
     while read one_line; do
         disp_log "one_line: "$one_line
@@ -23,44 +26,43 @@ func_read_env () {
         split_one_line=(${one_line//,/ })
 
         # get file name
-        filename=${split_one_line[0]}
+        get_name=${split_one_line[0]}
         disp_log $filename
 
         # create csv　失敗時、ログ出力してcontinue
-        ./modules/create_csv.sh $filename $l_date
+        ./modules/create_csv.sh $get_name $env_name $l_date
 
         # compress csv file(to zip)
-        ./modules/compress_tozip.sh $filename $l_date
+        ./modules/compress_tozip.sh $get_name $env_name $l_date
 
         echo ""
 
-
-
     done < $1
-
 }
 
 # start logs
 
 # define val
 file="../files/env/"$1
+file_name=$1
 disp_log "file :"$file
 args=("$@")
 argn=$#
 
-# check arg file
+# check arg num
 if [ $argn -ne 1 ]; then
     disp_log "ERROR args most be 1.. your args -> "$argn
     exit 1
 fi
 
-if [ -e $file ]; then
-    disp_log "file exist!"
-
-    func_read_env $file
-else
-    disp_log "this file not exist..."
+# check arg file
+if [ ! -e $file ]; then
+    disp_log "this file not exist..."    
 fi
+disp_log "file exist!"
+
+# call func
+func_read_env $file $file_name
 
 # end logs
 disp_log 'end'

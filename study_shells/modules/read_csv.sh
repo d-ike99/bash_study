@@ -1,5 +1,5 @@
 #!/bin/bash
-# in: csv file name, row info
+# in: envfile_name, date, row info
 
 # define log
 disp_log () {
@@ -25,7 +25,7 @@ func_read_csv () {
     for i in $(seq $((argn-1)))
     do
         # 1列目はファイル名のためスルーする
-        if [ $i = 0 ] || [ $i = 1 ]; then
+        if [ $i = 0 ] || [ $i = 1 ] || [ $i = 2 ]; then
             continue
         fi
 
@@ -49,7 +49,7 @@ func_read_csv () {
         for i in $(seq $((argn-1)))
         do
             # 1列目はファイル名のためスルーする
-            if [ $i = 0 ] || [ $i = 1 ]; then
+            if [ $i = 0 ] || [ $i = 1 ] || [ $i = 2 ]; then
                 continue
             fi
             query=$query${split_one_line[${args[$i]}-1]}", "
@@ -74,8 +74,13 @@ query=""
 # disp arg
 disp_log "args: "${args[*]}
 
+# define val
+envfile_name=$1
+date_name=$2
+name=$3
+
 # check arg file
-file="../files/outputs/date/$1/"$2".csv"
+file="../files/outputs/"$envfile_name"/"$date_name"/"$name".csv"
 disp_log "file :"$file
 if [ ! -e $file ]; then
     disp_log "ERROR this file not exist... -> "$file
@@ -86,12 +91,12 @@ disp_log "file exist!"
 
 
 # call func_read_csv
-if [ $argn -gt 2 ]; then
-    disp_log "call func_read_csv. because argn == 2 --> "$argn
+if [ $argn -gt 3 ]; then
+    disp_log "call func_read_csv. because argn > 3 --> "$argn
     func_read_csv ${args[*]}
 
     # memo in: $file
-    disp_log "name: "${args[1]}
+    disp_log "name: "$name
     disp_log "query: "$query
 fi
 

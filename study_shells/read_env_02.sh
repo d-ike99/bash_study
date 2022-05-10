@@ -1,16 +1,15 @@
 #!/bin/bash
-# in: env_file_name, date_folder_path
+# in: env_file_name, date_folder_name
 
 disp_log () {
     args=("$@")
     echo `date '+%Y/%m/%d %H:%M:%S'`" read_env.sh line:${BASH_LINENO[0]} "${args[*]}
 }
 
-# start log
-disp_log 'start'
-
 # read env file
+# IN:env_file_path, env_file_name, date_folder_name
 func_read_env () {
+
     # Read csvfile And Read line by 'one line' like "sample1,1,2"
     while read one_line; do
         disp_log "one_line: "$one_line
@@ -23,22 +22,25 @@ func_read_env () {
         disp_log $filename
 
         # decompress zip file(to csv)
-        ./modules/decompress_tocsv.sh $filename $2
+        ./modules/decompress_tocsv.sh $filename $2 $3
 
         # read csv
         ## in: csvfilename, out: mojiretsu
-        ./modules/read_csv.sh $2 ${split_one_line[*]}
+        ./modules/read_csv.sh $2 $3 ${split_one_line[*]}
         echo ""
 
     done < $1
 
 }
 
-# start logs
+# start log
+disp_log 'start'
 
 # define val
-env_file="../files/env/"$1
-date_folder="../files/outputs/date/"$2
+env_file_name=$1
+env_file_path="../files/env/"$1
+date_folder_name=$2
+date_folder="../files/outputs/"$1"/"$2
 args=("$@")
 argn=$#
 
@@ -48,11 +50,11 @@ if [ $argn -ne 2 ]; then
     exit 1
 fi
 
-if [ ! -e $env_file ]; then
-    disp_log "ERROR this file not exist... -> "$env_file
+if [ ! -e $env_file_path ]; then
+    disp_log "ERROR this file not exist... -> "$env_file_path
     exit 1
 fi
-disp_log "env file exist! -> "$env_file
+disp_log "env file exist! -> "$env_file_path
 
 if [ ! -d $date_folder ]; then
     disp_log "ERROR this folder not exist... -> "$date_folder
@@ -62,7 +64,7 @@ disp_log "folder exist! -> "$date_folder
 
 
 # call func
-func_read_env $env_file $2
+func_read_env $env_file_path $env_file_name $date_folder_name
 
 
 # end logs

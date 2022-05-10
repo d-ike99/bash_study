@@ -1,5 +1,5 @@
 #!/bin/bash
-# in: filename, date
+# in: name, envfile_name, date
 
 # define log
 disp_log () {
@@ -15,7 +15,9 @@ args=("$@")
 disp_log "args: " ${args[*]}
 
 # define val
-create_path="../files/outputs/date/"$2
+env_name=$2
+env_name=${env_name:0:-4}
+create_path="../files/outputs/"$env_name"/"$3
 csv_file_name=$1".csv"
 zip_file_name=$1".zip"
 
