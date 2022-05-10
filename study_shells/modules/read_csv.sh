@@ -76,6 +76,7 @@ disp_log "args: "${args[*]}
 
 # define val
 envfile_name=$1
+envfile_name=${envfile_name:0:-4}
 date_name=$2
 name=$3
 
